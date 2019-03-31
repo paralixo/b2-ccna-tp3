@@ -311,13 +311,13 @@ Réiterer la manipulation pour les machines restantes.
 On vérifie à l'aide de `ping`.
 Ca marche :
 
-    [mehaye@client1 ~]$ ping 10.4.1.2 (client)
+    [mehaye@client1 ~]$ ping 10.4.1.2 
     [mehaye@client1 ~]$ ping 10.4.1.3
     [mehaye@client1 ~]$ ping 10.4.1.4
 
 Ca ne marche pas :
 
-    [mehaye@client1 ~]$ ping 10.4.1.12 (server)
+    [mehaye@client1 ~]$ ping 10.4.1.12 
 
 ### OSPF
 
