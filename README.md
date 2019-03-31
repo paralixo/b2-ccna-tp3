@@ -247,7 +247,7 @@ On vérifie que les routeurs peuvent se joindre entre eux.
 
 ### Addressage
 
-**Mettre image de la topo ici**
+![schema 4](./imgs/schema_4.png)
 
 |         | 10.4.100.0/30 | 10.4.100.4/30 | 10.4.100.8/30 | 10.4.100.12/30 | 10.4.1.0/24 | 
 |--       |--             |--             |--             |--              |--|
