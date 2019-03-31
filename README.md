@@ -279,12 +279,12 @@ On configure maintenant les VLANs.
 Configuration entre deux switches en mode `trunk`:
 
     SW1# conf t
-    SW1(config)# interface ???
+    SW1(config)# interface fastEthernet 0/3
     SW1(config-if)# switchport trunk encapsulation dot1q
     SW1(config-if)# switchport mode trunk
 
     SW2# conf t
-    SW2(config)# interface ???
+    SW2(config)# interface fastEthernet 0/0
     SW2(config-if)# switchport trunk encapsulation dot1q
     SW2(config-if)# switchport mode trunk
 
@@ -294,7 +294,7 @@ Assignation des VLANs aux clients et serveurs. Exemple avec SW1-Client1 et SW2-S
     SW1(config)# vlan 20
     SW1(config-vlan)# name client1-sw1
     SW1(config-vlan)# exit
-    SW1(config)# interface ???
+    SW1(config)# interface fastEthernet 0/1
     SW1(config-if)# switchport mode access
     SW1(config-if)# switchport access vlan 20
 
@@ -302,7 +302,7 @@ Assignation des VLANs aux clients et serveurs. Exemple avec SW1-Client1 et SW2-S
     SW2(config)# vlan 10
     SW2(config-vlan)# name server1-sw2
     SW2(config-vlan)# exit
-    SW2(config)# interface ???
+    SW2(config)# interface fastEthernet sw 1:(0/1 , 0/2) , sw2:(0/2 , 0/3)
     SW2(config-if)# switchport mode access
     SW2(config-if)# switchport access vlan 10
 
@@ -311,14 +311,13 @@ Réiterer la manipulation pour les machines restantes.
 On vérifie à l'aide de `ping`.
 Ca marche :
 
-    [mehaye@client1 ~]$ ping ??.??.??.?? (client)
-    [mehaye@client1 ~]$ ping ??.??.??.??
-    [mehaye@client1 ~]$ ping ??.??.??.??
+    [mehaye@client1 ~]$ ping 10.4.1.2 (client)
+    [mehaye@client1 ~]$ ping 10.4.1.3
+    [mehaye@client1 ~]$ ping 10.4.1.4
 
 Ca ne marche pas :
 
-    [mehaye@client1 ~]$ ping ??.??.??.?? (server)
-    [mehaye@client1 ~]$ ping ??.??.??.??
+    [mehaye@client1 ~]$ ping 10.4.1.12 (server)
 
 ### OSPF
 
@@ -352,6 +351,10 @@ Normalement tout les routeurs peuvent se joindre entre eux et les clients peuven
 
 ### NAT
 
-    Bordel du NAT
+    R1#conf t
+    R1(config)# interface fastEthernet 0/0
+    R1(config-if)#ip address dhcp
+    R1(config-if)#no shut
+    R1#ping 8.8.8.8
 
 Notre architecture pour le Lab4 est maintenent terminé.
