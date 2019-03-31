@@ -245,3 +245,113 @@ On vérifie que les routeurs peuvent se joindre entre eux.
 
 ## IV. Lab Final
 
+### Addressage
+
+**Mettre image de la topo ici**
+
+|         | 10.4.100.0/30 | 10.4.100.4/30 | 10.4.100.8/30 | 10.4.100.12/30 | /24 | 
+|--       |--             |--             |--             |--              |--|
+| client1 | X             | X             | X             | X              |  |
+| client2 | X             | X             | X             | X              |  |
+| client3 | X             | X             | X             | X              |  |
+| server1 | X             | X             | X             | X              |  |
+| R1      | 10.4.100.1    | X             | X             | 10.4.100.14    | X |
+| R2      | 10.4.100.2    | 10.4.100.5    | X             | X              | X |
+| R3      | X             | X             | 10.4.100.10   | 10.4.100.13    | X |
+| R4      | X             | 10.4.100.6    | 10.4.100.9    | X              |  |
+
+On addresse les IP à nos différentes machines selon le tableau ci-dessus (se référer aux parties précédentes du TP pour la configuration).
+
+On vérifie que les routeurs peuvent se `ping`:
+
+    R1# ping 10.4.100.2
+    R1# ping 10.4.100.13
+    R2# ping 10.4.100.1
+    R2# ping 10.4.100.6
+    R3# ping 10.4.100.9
+    R3# ping 10.4.100.14
+    R4# ping 10.4.100.5
+    R4# ping 10.4.100.10
+
+### VLANs
+
+On configure maintenant les VLANs.
+Configuration entre deux switches en mode `trunk`:
+
+    SW1# conf t
+    SW1(config)# interface ???
+    SW1(config-if)# switchport trunk encapsulation dot1q
+    SW1(config-if)# switchport mode trunk
+
+    SW2# conf t
+    SW2(config)# interface ???
+    SW2(config-if)# switchport trunk encapsulation dot1q
+    SW2(config-if)# switchport mode trunk
+
+Assignation des VLANs aux clients et serveurs. Exemple avec SW1-Client1 et SW2-Server1 :
+
+    SW1# conf t
+    SW1(config)# vlan 20
+    SW1(config-vlan)# name client1-sw1
+    SW1(config-vlan)# exit
+    SW1(config)# interface ???
+    SW1(config-if)# switchport mode access
+    SW1(config-if)# switchport access vlan 20
+
+    SW2# conf t
+    SW2(config)# vlan 10
+    SW2(config-vlan)# name server1-sw2
+    SW2(config-vlan)# exit
+    SW2(config)# interface ???
+    SW2(config-if)# switchport mode access
+    SW2(config-if)# switchport access vlan 10
+
+Réiterer la manipulation pour les machines restantes.
+
+On vérifie à l'aide de `ping`.
+Ca marche :
+
+    [mehaye@client1 ~]$ ping ??.??.??.?? (client)
+    [mehaye@client1 ~]$ ping ??.??.??.??
+    [mehaye@client1 ~]$ ping ??.??.??.??
+
+Ca ne marche pas :
+
+    [mehaye@client1 ~]$ ping ??.??.??.?? (server)
+    [mehaye@client1 ~]$ ping ??.??.??.??
+
+### OSPF
+
+On configure l'OSPF en partageant les réseaux connus de chaque routeur : 
+
+    R1# conf t
+    R1(config)# router ospf 1
+    R1(config-router)# router-id 1.1.1.1
+    R1(config-router)# network 10.4.100.0 0.0.0.3 area 0
+    R1(config-router)# network 10.4.100.12 0.0.0.3 area 0
+
+    R2# conf t
+    R2(config)# router ospf 1
+    R2(config-router)# router-id 2.2.2.2
+    R2(config-router)# network 10.4.100.0 0.0.0.3 area 0
+    R2(config-router)# network 10.4.100.4 0.0.0.3 area 0
+
+    R3# conf t
+    R3(config)# router ospf 1
+    R3(config-router)# router-id 3.3.3.3
+    R3(config-router)# network 10.4.100.4 0.0.0.3 area 0
+    R3(config-router)# network 10.4.100.8 0.0.0.3 area 0
+
+    R4# conf t
+    R4(config)# router ospf 1
+    R4(config-router)# router-id 4.4.4.4
+    R4(config-router)# network 10.4.100.8 0.0.0.3 area 0
+    R4(config-router)# network 10.4.100.12 0.0.0.3 area 0
+
+Normalement tout les routeurs peuvent se joindre entre eux et les clients peuvent aussi `ping` n'importe quel routeur.
+
+### NAT
+
+    Bordel du NAT
+
+Notre architecture pour le Lab4 est maintenent terminé.
