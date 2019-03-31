@@ -302,7 +302,7 @@ Assignation des VLANs aux clients et serveurs. Exemple avec SW1-Client1 et SW2-S
     SW2(config)# vlan 10
     SW2(config-vlan)# name server1-sw2
     SW2(config-vlan)# exit
-    SW2(config)# interface fastEthernet sw 1:(0/1 , 0/2) , sw2:(0/2 , 0/3)
+    SW2(config)# interface fastEthernet 0/1 
     SW2(config-if)# switchport mode access
     SW2(config-if)# switchport access vlan 10
 
