@@ -249,16 +249,17 @@ On vérifie que les routeurs peuvent se joindre entre eux.
 
 **Mettre image de la topo ici**
 
-|         | 10.4.100.0/30 | 10.4.100.4/30 | 10.4.100.8/30 | 10.4.100.12/30 | /24 | 
+|         | 10.4.100.0/30 | 10.4.100.4/30 | 10.4.100.8/30 | 10.4.100.12/30 | 10.4.1.0/24 | 
 |--       |--             |--             |--             |--              |--|
-| client1 | X             | X             | X             | X              |  |
-| client2 | X             | X             | X             | X              |  |
-| client3 | X             | X             | X             | X              |  |
-| server1 | X             | X             | X             | X              |  |
-| R1      | 10.4.100.1    | X             | X             | 10.4.100.14    | X |
-| R2      | 10.4.100.2    | 10.4.100.5    | X             | X              | X |
-| R3      | X             | X             | 10.4.100.10   | 10.4.100.13    | X |
-| R4      | X             | 10.4.100.6    | 10.4.100.9    | X              |  |
+| client1 | X             | X             | X             | X              | 10.4.1.1  |
+| client2 | X             | X             | X             | X              | 10.4.1.2  |
+| client3 | X             | X             | X             | X              | 10.4.1.3  |
+| client4 | X             | X             | X             | X              | 10.4.1.4  |
+| server1 | X             | X             | X             | X              | 10.4.1.12 |
+| R1      | 10.4.100.1    | X             | X             | 10.4.100.14    | X         |
+| R2      | 10.4.100.2    | 10.4.100.5    | X             | X              | X         |
+| R3      | X             | X             | 10.4.100.10   | 10.4.100.13    | X         |
+| R4      | X             | 10.4.100.6    | 10.4.100.9    | X              | 10.4.1.5  |
 
 On addresse les IP à nos différentes machines selon le tableau ci-dessus (se référer aux parties précédentes du TP pour la configuration).
 
